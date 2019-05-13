@@ -252,6 +252,23 @@
         
         
           
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
           <li class="menu-item menu-item-archives">
 
     
@@ -298,6 +315,187 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://keiss.cn/2019/05/14/移动端抓取解密SSL流量/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="KeiSu He">
+      <meta itemprop="description" content="ケイス's blog">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KeiSu blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/05/14/移动端抓取解密SSL流量/" class="post-title-link" itemprop="url">移动端抓取解密SSL流量</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-05-14 00:52:21 / Modified: 00:53:25" itemprop="dateCreated datePublished" datetime="2019-05-14T00:52:21+08:00">2019-05-14</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>最近一段时间有需求要抓取移动端通过SSL加密的HTTPS和WebSocket流量,使用WireShark中Lua插件进行私有协议的解包和统计.网上找到的大多是解密浏览器SSL流量的教程，通过设置环境变量的方式导出浏览器握手过程中产生的ClientRandom和(Pre)MasterKey到Wireshark来解密，针对移动端的SSL流量解密少有涉及，通过对一些工具及OpenSSL的了解，有几种方法可以做到在移动端解密通过SSL传输的流量，在这里记录下来。</p>
+</blockquote>
+<ol>
+<li><p>搭建代理服务器，在移动端信任伪服务器即代理的证书。代理作为伪客户端与服务器握手，作为伪服务器与客户端握手，同时需要解决Sni等问题，其中原理在MitmProxy的文档中有详细的说明，见<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">2. 针对自己的移动端App，可以在客户端调用OpenSSL握手的过程中使用如下代码将ClientRandom和MasterKey导出：</span><br></pre></td></tr></table></figure></p>
+<p>/<em>   </em> Generates a NSS key log format compatible string containing the client</p>
+<ul>
+<li>random and the master key, intended to be used to decrypt externally</li>
+<li>captured network traffic using tools like Wireshark.<br>*</li>
+<li>Only supports the CLIENT_RANDOM method (SSL 3.0 - TLS 1.2).<br>*</li>
+<li><p><a href="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/Key_Log_Format" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/Key_Log_Format</a><br><em>/<br>char</em> ssl_ssl_masterkey_to_str(SSL <em>ssl)<br>{<br> char </em>str = NULL;<br> int rv;<br> unsigned char <em>k, </em>r;<br>#if OPENSSL_VERSION_NUMBER &gt;= 0x10100000L<br> unsigned char kbuf[48], rbuf[32];<br> k = &amp;kbuf[0];<br> r = &amp;rbuf[0];<br> SSL_SESSION_get_master_key(SSL_get0_session(ssl), k, sizeof(kbuf));<br> SSL_get_client_random(ssl, r, sizeof(rbuf));<br>#else /<em> OPENSSL_VERSION_NUMBER &lt; 0x10100000L </em>/<br> k = ssl-&gt;session-&gt;master_key;<br> r = ssl-&gt;s3-&gt;client_random;<br>#endif /<em> OPENSSL_VERSION_NUMBER &lt; 0x10100000L </em>/<br> rv = asprintf(&amp;str,</p>
+<pre><code>&quot;CLIENT_RANDOM &quot;
+&quot;%02X%02X%02X%02X%02X%02X%02X%02X&quot;
+&quot;%02X%02X%02X%02X%02X%02X%02X%02X&quot;
+&quot;%02X%02X%02X%02X%02X%02X%02X%02X&quot;
+&quot;%02X%02X%02X%02X%02X%02X%02X%02X&quot;
+&quot; &quot;
+&quot;%02X%02X%02X%02X%02X%02X%02X%02X&quot;
+&quot;%02X%02X%02X%02X%02X%02X%02X%02X&quot;
+&quot;%02X%02X%02X%02X%02X%02X%02X%02X&quot;
+&quot;%02X%02X%02X%02X%02X%02X%02X%02X&quot;
+&quot;%02X%02X%02X%02X%02X%02X%02X%02X&quot;
+&quot;%02X%02X%02X%02X%02X%02X%02X%02X&quot;
+&quot;\n&quot;,
+r[ 0], r[ 1], r[ 2], r[ 3], r[ 4], r[ 5], r[ 6], r[ 7],
+r[ 8], r[ 9], r[10], r[11], r[12], r[13], r[14], r[15626232261],
+r[16], r[17], r[18], r[19], r[20], r[21], r[22], r[23],
+r[24], r[25], r[26], r[27], r[28], r[29], r[30], r[31],
+k[ 0], k[ 1], k[ 2], k[ 3], k[ 4], k[ 5], k[ 6], k[ 7],
+k[ 8], k[ 9], k[10], k[11], k[12], k[13], k[14], k[15626232261],
+k[16], k[17], k[18], k[19], k[20], k[21], k[22], k[23],
+k[24], k[25], k[26], k[27], k[28], k[29], k[30], k[31],
+k[32], k[33], k[34], k[35], k[36], k[37], k[38], k[39],
+k[40], k[41], k[42], k[43], k[44], k[45], k[46], k[47]);
+</code></pre><p> return (rv &lt; 0) ? NULL : str;<br>}<br><code>`</code><br>保存为文件在WireShark设置SSLKEYLOGFILE即可。</p>
+</li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -376,11 +574,29 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-05-14 00:41:22" itemprop="dateModified" datetime="2019-05-14T00:41:22+08:00">2019-05-14</time>
+                <time title="Modified: 2019-05-14 00:48:15" itemprop="dateModified" datetime="2019-05-14T00:48:15+08:00">2019-05-14</time>
               
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/代码人生/" itemprop="url" rel="index"><span itemprop="name">代码人生</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -524,12 +740,29 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
               
 
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
               
 
               
@@ -547,7 +780,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                    <span class="site-state-item-count">3</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -770,6 +1005,8 @@
 
   
   
+    
+      
     
       
     
