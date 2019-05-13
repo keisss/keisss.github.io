@@ -102,13 +102,14 @@
   <meta name="description" content="ケイス&apos;s blog">
 <meta name="keywords" content="KeiSu, keiss, keisss, keisu, blog, android, C++, Java, JNI">
 <meta property="og:type" content="website">
-<meta property="og:title" content="KeiSu blog">
-<meta property="og:url" content="http://keiss.cn/index.html">
+<meta property="og:title" content="tags">
+<meta property="og:url" content="http://keiss.cn/tags/index.html">
 <meta property="og:site_name" content="KeiSu blog">
 <meta property="og:description" content="ケイス&apos;s blog">
 <meta property="og:locale" content="zh">
+<meta property="og:updated_time" content="2019-05-13T16:40:27.755Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KeiSu blog">
+<meta name="twitter:title" content="tags">
 <meta name="twitter:description" content="ケイス&apos;s blog">
 
 
@@ -117,7 +118,7 @@
 
   
   
-  <link rel="canonical" href="http://keiss.cn/">
+  <link rel="canonical" href="http://keiss.cn/tags/">
 
 
 
@@ -127,7 +128,7 @@
   };
 </script>
 
-  <title>KeiSu blog</title>
+  <title>tags | KeiSu blog</title>
   
 
 
@@ -175,8 +176,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -218,7 +218,7 @@
         
         
           
-          <li class="menu-item menu-item-home menu-item-active">
+          <li class="menu-item menu-item-home">
 
     
     
@@ -235,7 +235,7 @@
         
         
           
-          <li class="menu-item menu-item-tags">
+          <li class="menu-item menu-item-tags menu-item-active">
 
     
     
@@ -274,6 +274,22 @@
   
     
 
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
   
 
   
@@ -297,198 +313,76 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://keiss.cn/2017/10/20/AOT-JIT区别，各自优劣，混合编译/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="KeiSu He">
-      <meta itemprop="description" content="ケイス's blog">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="KeiSu blog">
-    </span>
-
     
+    
+    <div class="post-block page">
       <header class="post-header">
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2017/10/20/AOT-JIT区别，各自优劣，混合编译/" class="post-title-link" itemprop="url">AOT,JIT区别，各自优劣，混合编译</a>
-              
-            
-          </h1>
-        
+<h1 class="post-title" itemprop="name headline">tags
 
-        <div class="post-meta">
-          <span class="post-time">
+</h1>
 
-            
-            
-            
+<div class="post-meta">
+  
+  
 
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
 
-              
-                
-              
 
-              <time title="Created: 2017-10-20 00:32:10" itemprop="dateCreated datePublished" datetime="2017-10-20T00:32:10+08:00">2017-10-20</time>
-            
+</div>
 
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-05-14 00:41:22" itemprop="dateModified" datetime="2019-05-14T00:41:22+08:00">2019-05-14</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+</header>
 
       
       
-
       
+      <div class="post-body">
         
-          
-            <h1 id="AOT，JIT是什么？"><a href="#AOT，JIT是什么？" class="headerlink" title="AOT，JIT是什么？"></a>AOT，JIT是什么？</h1><p>JIT，即Just-in-time,动态(即时)编译，边运行边编译；AOT，Ahead Of Time，指运行前编译，是两种程序的编译方式</p>
-<h1 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h1><p>这两种编译方式的主要区别在于是否在“运行时”进行编译</p>
-<h1 id="优劣"><a href="#优劣" class="headerlink" title="优劣"></a>优劣</h1><h2 id="JIT优点："><a href="#JIT优点：" class="headerlink" title="JIT优点："></a>JIT优点：</h2><ol>
-<li>可以根据当前硬件情况实时编译生成最优机器指令（ps. AOT也可以做到，在用户使用是使用字节码根据机器情况在做一次编译）</li>
-<li>可以根据当前程序的运行情况生成最优的机器指令序列</li>
-<li>当程序需要支持动态链接时，只能使用JIT</li>
-<li>可以根据进程中内存的实际情况调整代码，使内存能够更充分的利用<h2 id="JIT缺点："><a href="#JIT缺点：" class="headerlink" title="JIT缺点："></a>JIT缺点：</h2></li>
-<li>编译需要占用运行时资源，会导致进程卡顿 </li>
-<li>由于编译时间需要占用运行时间，对于某些代码的编译优化不能完全支持，需要在程序流畅和编译时间之间做权衡</li>
-<li>在编译准备和识别频繁使用的方法需要占用时间，使得初始编译不能达到最高性能<h2 id="AOT优点："><a href="#AOT优点：" class="headerlink" title="AOT优点："></a>AOT优点：</h2></li>
-<li>在程序运行前编译，可以避免在运行时的编译性能消耗和内存消耗</li>
-<li>可以在程序运行初期就达到最高性能</li>
-<li>可以显著的加快程序的启动<h2 id="AOT缺点："><a href="#AOT缺点：" class="headerlink" title="AOT缺点："></a>AOT缺点：</h2></li>
-<li>在程序运行前编译会使程序安装的时间增加</li>
-<li>牺牲Java的一致性</li>
-<li>将提前编译的内容保存会占用更多的外<h1 id="与Android的关联"><a href="#与Android的关联" class="headerlink" title="与Android的关联"></a>与Android的关联</h1>Android在2.2的时候引入JIT，在kitkat时新增了ART(Android RunTime),在Android L时使用ART完全替代了Dalvik作为默认的虚拟机环境。<h2 id="Dalvik"><a href="#Dalvik" class="headerlink" title="Dalvik"></a>Dalvik</h2></li>
-</ol>
-<ul>
-<li>Dalvik使用JIT </li>
-<li>使用.dex字节码，是针对Android设备优化后的DVM所使用的运行时编译字节码</li>
-<li>.odex是对dex的优化，deodex在系统第一次开机时会提取所有apk内的dex文件，odex优化将dex提前提取出，加快了开机的速度和程序运行的速度<h2 id="ART"><a href="#ART" class="headerlink" title="ART"></a>ART</h2></li>
-<li>ART 使用AOT</li>
-<li>在安装apk时会进行预编译，生成OAT文件，仍以.odex保存，但是与Dalvik下不同，这个文件是可执行文件</li>
-<li>dex、odex 均可通过dex2oat生成oat文件，以实现兼容性</li>
-<li>在大型应用安装时需要更多时间和空间<h2 id="Android-N引入的混合编译"><a href="#Android-N引入的混合编译" class="headerlink" title="Android N引入的混合编译"></a>Android N引入的混合编译</h2>在Android N中引入了一种新的编译模式，同时使用JIT和AOT。这是我在网上找到的一些解释：<blockquote>
-<p>包含了一个混合模式的运行时。应用在安装时不做编译，而是解释字节码，所以可以快速启动。ART中有一种新的、更快的解释器，通过一种新的JIT完成，但是这种JIT的信息不是持久化的。取而代之的是，代码在执行期间被分析，分析结果保存起来。然后，当设备空转和充电的时候，ART会执行针对“热代码”进行的基于分析的编译，其他代码不做编译。为了得到更优的代码，ART采用了几种技巧包括深度内联。<br>对同一个应用可以编译数次，或者找到变“热”的代码路径或者对已经编译的代码进行新的优化，这取决于分析器在随后的执行中的分析数据。<br>这些大概说的是新的ART在安装程序时使用JIT，在JIT编译了一些代码后将这些代码保存到本地，等到设备空闲的时候将保存的这些代码使用AOT编译生成可执行文件保存到本地，待下次运行时直接使用，并且不断监视代码的更新，在代码有更新后重新生成可执行文件。</p>
-</blockquote>
-</li>
-</ul>
-
-          
         
+          <div class="tag-cloud">
+            <div class="tag-cloud-title">
+              
+              
+                
+                  
+                
+              
+                
+                  
+                
+              
+              2 tags in total
+            </div>
+            <div class="tag-cloud-tags">
+              
+                <a href="/tags/Android/" style="font-size: 12px; color: #ccc">Android</a> <a href="/tags/基础知识/" style="font-size: 12px; color: #ccc">基础知识</a>
+              
+            </div>
+          </div>
+        
+      </div>
+      
+      
       
     </div>
-
     
 
-    
-    
-    
+
 
     
-
-    
-      
     
     
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -739,6 +633,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
 
   
 
@@ -755,6 +653,8 @@
   
 
 
+  
+
 
   
 
@@ -769,10 +669,6 @@
   
 
   
-  
-    
-      
-    
   
 
   
